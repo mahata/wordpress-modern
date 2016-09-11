@@ -1,0 +1,16 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+  wordpress:
+    # image: wordpress:4.6.1-fpm
+    image: wordpress:4.6.1-apache
+    ports:
+      - 8888:80
+    environment:
+      WORDPRESS_DB_PASSWORD: example
+    links:
+      - mysql
