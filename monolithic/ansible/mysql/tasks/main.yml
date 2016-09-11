@@ -1,0 +1,12 @@
+- name: Install apt packages
+  apt: pkg={{ item }} update_cache=yes state=latest
+  with_items:
+    - mysql-server
+    - python-mysqldb
+  become: true
+
+- mysql_db: name=wordpress login_user=root encoding=utf8mb4 collation=utf8mb4_unicode_ci state=present
+
+- name: Stop Apache
+  service: name=apache2 state=stopped
+  become: true

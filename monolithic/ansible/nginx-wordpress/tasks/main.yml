@@ -1,0 +1,23 @@
+- name: Install apt packages
+  apt: pkg={{ item }} update_cache=yes state=latest
+  with_items:
+    - nginx
+    - wordpress
+  become: true
+
+- name: Copy config-localhost.php
+  copy: src=config-localhost.php dest=/etc/wordpress/config-localhost.php
+  become: true
+
+- name: Unlink default Nginx conf
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  become: true
+
+- name: Copy Nginx conf file
+  copy: src=nginx-wordpress dest=/etc/nginx/sites-available/nginx-wordpress
+  become: true
+
+- name: Link nginx-wordpress Nginx conf
+  file: src=/etc/nginx/sites-available/nginx-wordpress path=/etc/nginx/sites-enabled/nginx-wordpress state=link
+  become: true
+  notify: Restart Nginx

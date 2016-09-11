@@ -1,0 +1,10 @@
+- hosts: all
+  roles:
+    # Install PHP-FPM
+    - { role: php-fpm }
+
+    # Install Nginx and WordPress
+    - { role: nginx-wordpress }
+
+    # Install MySQL - It's not needed in production
+    - { role: mysql }
