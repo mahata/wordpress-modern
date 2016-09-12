@@ -5,6 +5,13 @@
     - wordpress
   become: true
 
+- name: Change owner for WordPress directory
+  file: path={{ item }} recurse=yes owner=www-data group=www-data
+  with_items:
+    - /usr/share/wordpress
+    - /var/lib/wordpress
+  become: true
+
 - name: Copy config-localhost.php
   copy: src=config-localhost.php dest=/etc/wordpress/config-localhost.php
   become: true
